@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="page-title">LM BIOSKOP — Bioskop</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:wght@300;400;600&family=Bebas+Neue&display=swap" rel="stylesheet">
+<script>
+var BIOSKOP = {
+  naziv:       "LM BIOSKOP",
+  adresa:      "Koste Abraševića 2, Šabac",
+  telefon:     "+381",
+  email:       "lmbioskopdcp@gmail.com",
+  radno_vreme: "",
+  blagajna:    "Biletarnica se otvara sat vremena pre početka prve projekcije."
+};
+var FILMOVI = [
+  {
+    naziv:          "UBIĆE TE",
+    zanr:           "akcioni / horor /",
+    trajanje:       "1h 34min",
+    uzrast:         "",
+    oznaka:         "Svaki dan",
+    poster:         "ubiće te.jpg",
+    boja_bez_slike: "crvena",
+    termini:        ["21.00"]
+  }
+];
+var USKORO = [
+  {
+    dan:     "23",
+    mjesec:  "april",
+    godina:  "2025",
+    naziv:   "DAVID",
+    zanr:    "animirani",
+    opis:    "Spektakularna muzička avantura, zasnovana na biblijskoj priči, u kojoj su likovima glasove pozajmili naši vrsni glumci.
+Od pesama majčinog srca do tihog šapata Božje milosti, Davidova priča počinje u skromnosti i predanoj veri. Kada se div Golijat uzdigne i zapreti njegovom narodu, mladi pastir — naoružan samo praćkom, nekoliko kamenčića i hrabrošću koju daje vera — smelo staje u odbranu onih koje voli. Na putovanju koje sledi otkrivaju se snaga odanosti, ljubavi i istrajnosti, sve do velike bitke koja se ne vodi samo za krunu, nego i za dobro i budućnost celog kraljevstva."
+  }
+];
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--gold:#C9A84C;--gold-light:#E8C97A;--dark:#080808;--dark2:#111111;--dark3:#1a1a1a;--cream:#F2EDDF}
+html{scroll-behavior:smooth}
+body{background:var(--dark);color:var(--cream);font-family:'Cormorant Garamond',serif;font-size:18px;overflow-x:hidden}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.5rem 4rem;background:linear-gradient(to bottom,rgba(8,8,8,0.95),transparent)}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:0.3em;color:var(--gold);text-decoration:none}
+.nav-links{display:flex;gap:3rem;list-style:none}
+.nav-links a{color:var(--cream);text-decoration:none;font-size:1rem;letter-spacing:0.2em;text-transform:uppercase;font-weight:300;opacity:0.8;transition:opacity 0.3s,color 0.3s}
+.nav-links a:hover{opacity:1;color:var(--gold-light)}
+#naslovna{min-height:100vh;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(139,26,26,0.15) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(201,168,76,0.08) 0%,transparent 50%),linear-gradient(135deg,#080808 0%,#0f0a0a 50%,#080808 100%)}
+.hero-lines{position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(201,168,76,0.015) 3px,rgba(201,168,76,0.015) 4px);pointer-events:none}
+.hero-content{position:relative;text-align:center;z-index:2;padding:2rem}
+.hero-label{font-size:0.85rem;letter-spacing:0.5em;text-transform:uppercase;color:var(--gold);margin-bottom:2rem;font-weight:300;opacity:0;animation:fadeUp 1s 0.3s forwards}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(4rem,12vw,10rem);line-height:0.9;font-weight:700;margin-bottom:1.5rem;opacity:0;animation:fadeUp 1s 0.5s forwards}
+.hero-title span{display:block;color:var(--gold);font-style:italic;font-weight:400;font-size:0.45em;letter-spacing:0.1em}
+.hero-subtitle{font-size:1.1rem;letter-spacing:0.15em;color:rgba(242,237,223,0.5);font-weight:300;margin-bottom:3.5rem;opacity:0;animation:fadeUp 1s 0.7s forwards}
+.hero-cta{display:inline-flex;align-items:center;gap:1rem;padding:1.1rem 3rem;border:1px solid var(--gold);color:var(--gold);text-decoration:none;font-size:0.85rem;letter-spacing:0.3em;text-transform:uppercase;font-weight:600;transition:all 0.4s;opacity:0;animation:fadeUp 1s 0.9s forwards}
+.hero-cta:hover{background:var(--gold);color:var(--dark)}
+.hero-scroll{position:absolute;bottom:3rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:0.5rem;opacity:0;animation:fadeUp 1s 1.2s forwards}
+.hero-scroll span{font-size:0.7rem;letter-spacing:0.3em;text-transform:uppercase;color:rgba(242,237,223,0.3)}
+.scroll-line{width:1px;height:60px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollPulse 2s infinite}
+@keyframes scrollPulse{0%,100%{opacity:0.3}50%{opacity:1}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.section-wrap{padding:8rem 4rem}
+.section-inner{max-width:1400px;margin:0 auto}
+.section-header{display:flex;align-items:center;gap:2rem;margin-bottom:4rem}
+.section-number{font-family:'Bebas Neue',sans-serif;font-size:5rem;color:rgba(201,168,76,0.12);line-height:1;user-select:none}
+.section-title-group h2{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,5vw,4rem);font-weight:400;line-height:1}
+.section-title-group h2 em{color:var(--gold)}
+.section-line{width:60px;height:1px;background:var(--gold);margin-top:1rem}
+#program{background:linear-gradient(to bottom,var(--dark),var(--dark2),var(--dark))}
+.movies-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:2rem}
+.movie-card{position:relative;background:var(--dark3);border:1px solid rgba(201,168,76,0.15);overflow:hidden;transition:transform 0.4s,border-color 0.4s;cursor:pointer}
+.movie-card:hover{transform:translateY(-8px);border-color:rgba(201,168,76,0.5)}
+.movie-poster-img{width:100%;height:380px;object-fit:cover;display:block}
+.movie-poster-placeholder{width:100%;height:380px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.poster-crvena{background:linear-gradient(135deg,#1a0a0a,#3d1515,#1a0a0a)}
+.poster-plava{background:linear-gradient(135deg,#0a0a1a,#151535,#0a0a1a)}
+.poster-zelena{background:linear-gradient(135deg,#0a1a0a,#153515,#0a1a0a)}
+.poster-zlatna{background:linear-gradient(135deg,#1a1505,#352d10,#1a1505)}
+.poster-title-big{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:rgba(242,237,223,0.15);text-align:center;padding:1rem;line-height:1.2}
+.movie-badge{position:absolute;top:1.2rem;left:1.2rem;padding:0.3rem 0.9rem;font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;font-weight:600}
+.badge-premijera{background:var(--gold);color:var(--dark)}
+.badge-svaki{background:transparent;color:var(--gold);border:1px solid var(--gold)}
+.movie-info{padding:1.5rem}
+.movie-genre{font-size:0.75rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);font-weight:300;margin-bottom:0.6rem}
+.movie-name{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;margin-bottom:0.4rem;line-height:1.2}
+.movie-meta{display:flex;gap:1rem;font-size:0.85rem;color:rgba(242,237,223,0.5);font-weight:300;margin-bottom:1rem}
+.movie-showtimes{display:flex;flex-wrap:wrap;gap:0.5rem}
+.showtime{padding:0.35rem 0.9rem;border:1px solid rgba(201,168,76,0.3);font-size:0.85rem;color:var(--cream);font-weight:300;letter-spacing:0.05em;cursor:pointer;transition:all 0.3s}
+.showtime:hover{background:var(--gold);color:var(--dark);border-color:var(--gold)}
+#uskoro{background:var(--dark)}
+.upcoming-list{display:flex;flex-direction:column}
+.upcoming-item{display:grid;grid-template-columns:160px 1fr auto;align-items:center;gap:3rem;padding:2.5rem 0;border-bottom:1px solid rgba(201,168,76,0.1);transition:all 0.3s}
+.upcoming-item:hover{padding-left:1.5rem;border-bottom-color:rgba(201,168,76,0.3)}
+.upcoming-item:hover .upcoming-number{color:rgba(201,168,76,0.4)}
+.upcoming-date-block{text-align:center;border-right:1px solid rgba(201,168,76,0.15);padding-right:3rem}
+.upcoming-month{font-size:0.75rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);font-weight:300}
+.upcoming-day{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;line-height:1;margin:0.2rem 0}
+.upcoming-year{font-size:0.8rem;color:rgba(242,237,223,0.3);font-weight:300}
+.upcoming-tag{font-size:0.72rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);font-weight:300;margin-bottom:0.5rem}
+.upcoming-title{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;margin-bottom:0.4rem;line-height:1.1}
+.upcoming-desc{font-size:1rem;color:rgba(242,237,223,0.5);font-weight:300;max-width:500px;line-height:1.5}
+.upcoming-number{font-family:'Bebas Neue',sans-serif;font-size:5rem;color:rgba(201,168,76,0.08);transition:color 0.3s;user-select:none}
+footer{background:var(--dark);border-top:1px solid rgba(201,168,76,0.15);padding:4rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:2rem}
+.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:0.3em;color:var(--gold)}
+.footer-info{text-align:center;font-size:0.9rem;color:rgba(242,237,223,0.3);font-weight:300;line-height:1.8}
+.footer-contact{text-align:right;font-size:0.9rem;color:rgba(242,237,223,0.4);font-weight:300;line-height:1.8}
+.footer-contact a{color:var(--gold);text-decoration:none}
+.divider{width:100%;height:1px;background:linear-gradient(to right,transparent,rgba(201,168,76,0.3),transparent)}
+@media(max-width:900px){nav{padding:1.2rem 2rem}.nav-links{gap:1.5rem}.section-wrap{padding:5rem 2rem}.upcoming-item{grid-template-columns:100px 1fr}.upcoming-number{display:none}.upcoming-date-block{padding-right:1.5rem}footer{padding:3rem 2rem;flex-direction:column;align-items:center;text-align:center}.footer-contact{text-align:center}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="#naslovna" class="nav-logo" id="nav-naziv"></a>
+  <ul class="nav-links">
+    <li><a href="#naslovna">Naslovna</a></li>
+    <li><a href="#program">Program</a></li>
+    <li><a href="#uskoro">Uskoro</a></li>
+  </ul>
+</nav>
+<div id="naslovna">
+  <div class="hero-bg"></div>
+  <div class="hero-lines"></div>
+  <div class="hero-content">
+    <p class="hero-label">Dobrodošli u</p>
+    <h1 class="hero-title" id="hero-naziv"><span>Bioskop</span></h1>
+    <p class="hero-subtitle">Jedan ekran &nbsp;·&nbsp; Neponovljivo iskustvo</p>
+    <a href="#program" class="hero-cta">Pogledaj program <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+  </div>
+  <div class="hero-scroll"><span>Skroluj</span><div class="scroll-line"></div></div>
+</div>
+<div class="divider"></div>
+<div id="program" class="section-wrap">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-number">01</div>
+      <div class="section-title-group"><h2>Trenutni <em>Program</em></h2><div class="section-line"></div></div>
+    </div>
+    <div class="movies-grid" id="movies-grid"></div>
+  </div>
+</div>
+<div class="divider"></div>
+<div id="uskoro" class="section-wrap">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-number">02</div>
+      <div class="section-title-group"><h2>Uskoro u <em>Bioskopu</em></h2><div class="section-line"></div></div>
+    </div>
+    <div class="upcoming-list" id="upcoming-list"></div>
+  </div>
+</div>
+<footer>
+  <div class="footer-logo" id="footer-naziv"></div>
+  <div class="footer-info" id="footer-info"></div>
+  <div class="footer-contact" id="footer-contact"></div>
+</footer>
+<script>
+document.getElementById('page-title').textContent=BIOSKOP.naziv+' — Bioskop';
+document.getElementById('nav-naziv').textContent=BIOSKOP.naziv;
+document.getElementById('footer-naziv').textContent=BIOSKOP.naziv;
+var hn=document.getElementById('hero-naziv');
+hn.childNodes[0].textContent=BIOSKOP.naziv;
+document.getElementById('footer-info').innerHTML='Svaki dan \u00a0·\u00a0 '+BIOSKOP.radno_vreme+'<br>Radno vreme blagajne: '+BIOSKOP.blagajna+'<br>&copy; '+new Date().getFullYear()+' '+BIOSKOP.naziv;
+document.getElementById('footer-contact').innerHTML=BIOSKOP.adresa+'<br><a href="tel:'+BIOSKOP.telefon.replace(/\s/g,'')+'">'+BIOSKOP.telefon+'</a><br><a href="mailto:'+BIOSKOP.email+'">'+BIOSKOP.email+'</a>';
+var grid=document.getElementById('movies-grid');
+var rimski=['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII'];
+FILMOVI.forEach(function(f){
+  var bc=f.oznaka==='Premijera'?'badge-premijera':'badge-svaki';
+  var ph;
+  if(f.poster&&f.poster!==''){ph='<img class="movie-poster-img" src="posteri/'+f.poster+'" alt="'+f.naziv+'" onerror="this.parentNode.innerHTML='<div class=\\"movie-poster-placeholder poster-'+f.boja_bez_slike+'\\"><div class=\\"poster-title-big\\">'+f.naziv+'</div></div>'">';}
+  else{ph='<div class="movie-poster-placeholder poster-'+f.boja_bez_slike+'"><div class="poster-title-big">'+f.naziv+'</div></div>';}
+  var c=document.createElement('div');
+  c.className='movie-card';
+  c.innerHTML=ph+'<span class="movie-badge '+bc+'">'+f.oznaka+'</span><div class="movie-info"><div class="movie-genre">'+f.zanr+'</div><div class="movie-name">'+f.naziv+'</div><div class="movie-meta"><span>'+f.trajanje+'</span><span>·</span><span>'+f.uzrast+'</span></div><div class="movie-showtimes">'+f.termini.map(function(t){return'<div class="showtime">'+t+'</div>';}).join('')+'</div></div>';
+  grid.appendChild(c);
+});
+var ul=document.getElementById('upcoming-list');
+USKORO.forEach(function(u,i){
+  var item=document.createElement('div');
+  item.className='upcoming-item';
+  item.innerHTML='<div class="upcoming-date-block"><div class="upcoming-month">'+u.mjesec+'</div><div class="upcoming-day">'+u.dan+'</div><div class="upcoming-year">'+u.godina+'</div></div><div><div class="upcoming-tag">'+u.zanr+'</div><div class="upcoming-title">'+u.naziv+'</div><div class="upcoming-desc">'+u.opis+'</div></div><div class="upcoming-number">'+(rimski[i]||'')+'</div>';
+  ul.appendChild(item);
+});
+</script>
+</body>
+</html>
